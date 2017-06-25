@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "ordenacao.h"
 
 void troca(int v[], int j, int k){
     int aux = v[j];
@@ -53,6 +54,31 @@ void insercao(int v[], int i, int n){
             troca(v, j, j-1);
     }
 }
+
+int particao(int v[], int ini, int fim){
+    if(v == NULL)
+        return -1;
+    int pivot = ini;
+    int i = ini+1;
+    int j = fim;
+
+    while(i<=j){
+        if(v[i] <= v[pivot])
+            i++;
+        else if(v[j] > v[pivot])
+            j--;
+        else{
+            troca(v, i, j);
+            i++;
+            j--;
+        }
+    }
+
+    troca(v, pivot, j);
+
+    return j;
+}
+
 void bubbleSort(int v[], int n){
     if(v == NULL)
         return;
@@ -81,4 +107,13 @@ void insertionSort(int v[], int n){
 
     for(i = 0; i<n; i++)
         insercao(v, i, n);
+}
+
+void quickSort(int v[], int ini, int fim){
+    if(v == NULL || ini>fim)
+        return;
+    
+    int p = particao(v,ini, fim);        
+    quickSort(v, ini, p-1);
+    quickSort(v, p+1, fim);
 }
