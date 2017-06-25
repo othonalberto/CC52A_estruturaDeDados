@@ -5,6 +5,7 @@ int nsequencial(int v[], int k, int n);
 // situação hipotética onde a probabilidade de k estar em um índice par é maior
 int nsequencialPar(int v[], int k, int n);
 
+// situação hipotética onde a probabilidade de k segue a distruição normal
 int sequencialMeio(int v[], int k, int ini, int fim);
 int nsequencialMeio(int v[], int k, int n);
 
