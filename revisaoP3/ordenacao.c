@@ -110,6 +110,45 @@ int randomParticao(int v[], int ini, int fim){
     return j;
 }
 
+void intercala(int v[], int ini, int fim, int meio){
+    int i = ini;
+    int j = meio+1;
+    int n = fim-ini+1;
+    int k = 0;
+    
+    int *aux = malloc(sizeof(int)*n);
+    if(aux == NULL)
+        return;
+    
+    while(i<=meio && j<=fim){
+        if(v[i] <= v[j]){
+            aux[k] = v[i];
+            i++;
+        } else{
+            aux[k] = v[j];
+            j++;
+        }
+        k++;
+    }
+
+    while(i<=meio){
+        aux[k] = v[i];
+        i++;
+        k++;
+    }
+
+    while(j<=fim){
+        aux[k] = v[j];
+        j++;
+        k++;
+    }
+    
+    for(k = 0; k<n; k++)
+        v[ini++] = aux[k];
+
+    free(aux);
+}
+
 void bubbleSort(int v[], int n){
     if(v == NULL)
         return;
@@ -156,4 +195,18 @@ void randomQuickSort(int v[], int ini, int fim){
     int p = randomParticao(v, ini, fim);
     quickSort(v, ini, p-1);
     quickSort(v, p+1, fim);
+}
+
+void mergeSort(int v[], int ini, int fim){
+    if(v == NULL)
+        return;
+    
+    if(ini<fim){
+        int meio;
+        meio = (fim+ini)/2;
+
+        mergeSort(v, ini, meio);
+        mergeSort(v, meio+1, fim);
+        intercala(v, ini, fim, meio);
+    }
 }
