@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 #include "ordenacao.h"
 
 void troca(int v[], int j, int k){
@@ -79,6 +80,36 @@ int particao(int v[], int ini, int fim){
     return j;
 }
 
+int randomParticao(int v[], int ini, int fim){
+    if(v == NULL)
+        return -1;
+    
+    srand(time(NULL));
+
+    int pivot = ini;
+    int i = ini+1;
+    int j = fim;
+    int r = rand()% (fim-ini+1) + ini;
+    
+    troca(v, pivot, r);
+    
+    while(i<=j){
+        if(v[i] < v[pivot])
+            i++;
+        else if(v[j] > v[pivot])
+            j--;
+        else{
+            troca(v, i, j);
+            i++;
+            j--;
+        }
+    }
+
+    troca(v, pivot, j);
+
+    return j;
+}
+
 void bubbleSort(int v[], int n){
     if(v == NULL)
         return;
@@ -113,7 +144,16 @@ void quickSort(int v[], int ini, int fim){
     if(v == NULL || ini>fim)
         return;
     
-    int p = particao(v,ini, fim);        
+    int p = particao(v,ini, fim); 
+    quickSort(v, ini, p-1);
+    quickSort(v, p+1, fim);
+}
+
+void randomQuickSort(int v[], int ini, int fim){
+    if(v == NULL || ini>fim)
+        return;
+
+    int p = randomParticao(v, ini, fim);
     quickSort(v, ini, p-1);
     quickSort(v, p+1, fim);
 }
